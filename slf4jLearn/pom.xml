@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>LogLearn</artifactId>
+        <groupId>LogLearn</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>slf4jLearn</artifactId>
+<dependencies>
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+    <dependency>
+        <!-- slf4j日志门面 -->
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.30</version>
+    </dependency>
+    <!--  logback 的日志实现 -->
+   <!-- <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.3</version>
+&lt;!&ndash;        <scope>test</scope>&ndash;&gt;
+    </dependency>-->
+
+    <!--绑定log4j 日志实现，需要导入适配器-->
+    <!--<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.7.30</version>
+&lt;!&ndash;        <scope>test</scope>&ndash;&gt;
+    </dependency>-->
+    <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+    <dependency>
+        <!--导入log4j-->
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+    </dependency>
+    <!--导入log4j-over-slf4j的桥接器，这个桥接器不能和log4j的适配器同时存在-->
+    <!--桥接器的作用是，从log4j转换为使用slf4j时，要加入这样一个桥接器-->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>log4j-over-slf4j</artifactId>
+        <version>1.7.30</version>
+    </dependency>
+
+
+
+    <!--绑定JUL日志实现，需要导入适配器，由于这个是jdk自带的，所以其他的不需要导入-->
+  <!--  <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-jdk14</artifactId>
+        <version>1.7.30</version>
+&lt;!&ndash;        <scope>test</scope>&ndash;&gt;
+    </dependency>-->
+
+
+    <!--nop 日志开关-->
+    <!--<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-nop</artifactId>
+        <version>1.7.30</version>
+&lt;!&ndash;        <scope>test</scope>&ndash;&gt;
+    </dependency>-->
+
+    <!-- <dependency>
+         &lt;!&ndash; slf4j内置的简单实现 &ndash;&gt;
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-simple</artifactId>
+         <version>1.7.30</version>
+         &lt;!&ndash;<scope>test</scope>&ndash;&gt;
+     </dependency>-->
+
+</dependencies>
+
+</project>
