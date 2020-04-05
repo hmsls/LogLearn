@@ -6,6 +6,7 @@
         格式：${name}
     -->
     <property name="pattern" value="[%-5level %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L [%thread] %m%n"/>
+    <property name="log_dir" value="logs" ></property>
     <!--控制台日志输出的appender-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <!--控制输出流对象，默认Syste.out改为System.err-->
@@ -16,33 +17,58 @@
             <pattern>${pattern}</pattern>
         </encoder>
     </appender>
+
+    <!-- 日志文件输出的appender-->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <!--日志文件保存路径-->
+        <file>${log_dir}/logback-ls.log</file>
+        <!--日志消息格式配置-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--日志拆分和压缩归档 appender配置-->
+    <appender name="rollFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/roll-log.log</file>
+        <!--日志消息格式配置-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <!-- 指定拆分规则-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--按照时间和压缩格式声明拆分的文件名-->
+            <fileNamePattern>${log_dir}/roll.%d{yyyy-MM-dd-HH-mm-ss}.log%i.gz</fileNamePattern>
+            <maxFileSize>1KB</maxFileSize>
+        </rollingPolicy>
+        <!--日志级别过滤器-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--日志过滤规则-->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!--异步日志,主程序不需要等待日志记录完，接着执行-->
+    <appender name="asyc" class="ch.qos.logback.classic.AsyncAppender">
+        <!--指定某个具体的appender-->
+        <appender-ref ref="rollFile"></appender-ref>
+    </appender>
+
     <!--root logger 配置-->
     <root level="ALL">
         <appender-ref ref="console"></appender-ref>
+        <appender-ref ref="asyc"></appender-ref>
     </root>
 
-    <!--&lt;!&ndash;定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径&ndash;&gt;
-    <property name="LOG_HOME" value="/home" />
-    &lt;!&ndash; 按照每天生成日志文件 &ndash;&gt;
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            &lt;!&ndash;日志文件输出的文件名&ndash;&gt;
-            <FileNamePattern>${LOG_HOME}/TestWeb.log.%d{yyyy-MM-dd}.log</FileNamePattern>
-            &lt;!&ndash;日志文件保留天数&ndash;&gt;
-            <MaxHistory>30</MaxHistory>
-        </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            &lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符&ndash;&gt;
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
-        </encoder>
-        &lt;!&ndash;日志文件最大的大小&ndash;&gt;
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>10MB</MaxFileSize>
-        </triggeringPolicy>
-    </appender>
-
-    &lt;!&ndash; 日志输出级别 &ndash;&gt;
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
-    </root>-->
+    <!--自定义logger对象
+        name：包名，这个包的子包都属于这个logger对象的
+        level：日志级别
+        additivity：自定义logger对象是否继承 rootLogger
+    -->
+    <logger name="lishuai" level="info" additivity="false">
+        <appender-ref ref="console"></appender-ref>
+    </logger>
 </configuration>
