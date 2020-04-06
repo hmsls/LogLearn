@@ -12,7 +12,23 @@
         <module>Log4jLearn</module>
         <module>JCLLearn</module>
         <module>slf4jLearn</module>
+        <module>LogbackLearn</module>
+        <module>Log4j2Learn</module>
     </modules>
-
+    <!--打包自己的程序，上传到自己的私服-->
+    <distributionManagement>
+        <!--上传目录，当我的程序version是1.0-RELEASES时，上传到这个目录-->
+        <repository>
+            <id>release-repository</id>
+            <name>release-repository</name>
+            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <!--上传目录，当我的程序version是1.0-SNAPSHOT时，上传到这个目录-->
+        <snapshotRepository>
+            <id>snapshot-repository</id>
+            <name>snapshot-repository</name>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
