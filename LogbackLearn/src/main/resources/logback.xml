@@ -58,6 +58,7 @@
     </appender>
 
     <!--root logger 配置-->
+    <!--<root>也是<logger>元素，但是它是根logger。只有一个level属性，因为已经被命名为"root".-->
     <root level="ALL">
         <appender-ref ref="console"></appender-ref>
         <appender-ref ref="asyc"></appender-ref>
